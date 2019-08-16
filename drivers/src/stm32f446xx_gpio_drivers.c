@@ -112,11 +112,44 @@ void GPIO_PeriClockControl(GPIO_RegDef_t *pGPIOx, uint8_t EnorDi)
 
     }
 
-   else
+   else                                                                       // interrupt mode
    {
-     // interrupt mode
+     if(pGPIOHandle->GPIO_PinConfig.GPIO_PinMode == GPIO_MODE_IT_FT)
+        {
+    	   //configure RTSR
+    	   EXTI->FTSR |= 1 << (pGPIOHandle->GPIO_PinConfig.GPIO_PinNumber);
 
-   }
+           //clear FTSR
+    	   EXTI->RTSR &= ~( 1 << (pGPIOHandle->GPIO_PinConfig.GPIO_PinNumber));
+         }
+
+     if(pGPIOHandle->GPIO_PinConfig.GPIO_PinMode == GPIO_MODE_IT_RT)
+          {
+         	 //configure FTSR
+         	 EXTI->RTSR |= 1 << (pGPIOHandle->GPIO_PinConfig.GPIO_PinNumber);
+
+              //clear RTSR
+         	 EXTI->FTSR &= ~( 1 << (pGPIOHandle->GPIO_PinConfig.GPIO_PinNumber));
+          }
+
+     if(pGPIOHandle->GPIO_PinConfig.GPIO_PinMode == GPIO_MODE_IT_RFT)
+          {
+         	 //configure FTSR
+         	 EXTI->FTSR |= 1 << (pGPIOHandle->GPIO_PinConfig.GPIO_PinNumber);
+
+              //configure RTSR
+         	 EXTI->RTSR |=  1 << pGPIOHandle->GPIO_PinConfig.GPIO_PinNumber;
+          }
+
+     // configure the GPIO port selection on SYSCFG_EXTICR
+
+
+     // enable the EXTI interrupt delivery using IMR
+
+     EXTI->IMR |= 1 << pGPIOHandle->GPIO_PinConfig.GPIO_PinNumber;
+
+
+}
 
      	 //pin speed configuration
 

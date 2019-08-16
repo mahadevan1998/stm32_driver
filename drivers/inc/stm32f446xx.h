@@ -91,27 +91,27 @@ typedef struct
     __vo uint32_t AHB1RSTR;
     __vo uint32_t AHB2RSTR;
     __vo uint32_t AHB3RSTR;
-    __vo uint32_t RESERVED0;
+         uint32_t RESERVED0;
     __vo uint32_t APB1RSTR;
     __vo uint32_t APB2RSTR;
-    __vo uint32_t RESERVED1[2];
+         uint32_t RESERVED1[2];
     __vo uint32_t AHB1ENR;
     __vo uint32_t AHB2ENR;
     __vo uint32_t AHB3ENR;
-    __vo uint32_t RESERVED2;
+         uint32_t RESERVED2;
     __vo uint32_t APB1ENR;
     __vo uint32_t APB2ENR;
-    __vo uint32_t RESERVED3[2];
+         uint32_t RESERVED3[2];
     __vo uint32_t AHB1LPENR;
     __vo uint32_t AHB2LPENR;
     __vo uint32_t AHB3LPENR;
-    __vo uint32_t RESERVED4;
+         uint32_t RESERVED4;
     __vo uint32_t APB1LPENR;
     __vo uint32_t APB2LPENR;
-    __vo uint32_t RESERVED5[2];
+         uint32_t RESERVED5[2];
     __vo uint32_t BDCR;
     __vo uint32_t CSR;
-    __vo uint32_t RESERVED6[2];
+         uint32_t RESERVED6[2];
     __vo uint32_t SSCGR;
     __vo uint32_t PLLI2SCFGR;
     __vo uint32_t PLLSAICFGR;
@@ -119,6 +119,38 @@ typedef struct
     __vo uint32_t CKGATEENR;
     __vo uint32_t DCKCFGR2;
 }RCC_RegDef_t;
+
+/*
+ * EXTI register structure
+ */
+
+  typedef struct
+ {
+
+	__vo uint32_t IMR;
+	__vo uint32_t EMR;
+	__vo uint32_t RTSR;
+	__vo uint32_t FTSR;
+	__vo uint32_t SWIER;
+	__vo uint32_t PR;
+
+ }EXTI_RegDef_t;
+
+/*
+* SYSCFG register structure
+*/
+
+  typedef struct
+  {
+	  __vo uint32_t MEMRMP;
+	  __vo uint32_t PMC;
+	  __vo uint32_t EXTICR[4];
+	       uint32_t RESERVED1[2];
+	  __vo uint32_t CMPCR;
+	       uint32_t RESERVED2[2];
+	  __vo uint32_t CFGR;
+  }SYSCFG_RegDef_t;
+
 
 /*
  * peripheral definition (peripheral base address type casted to *xxx_RegDef_t)
@@ -132,8 +164,8 @@ typedef struct
 #define GPIOG                       ((GPIO_RegDef_t*)GPIO_G_BASEADDR)
 #define GPIOH                       ((GPIO_RegDef_t*)GPIO_H_BASEADDR)
 
-#define RCC   ((RCC_RegDef_t*)RCC_BASEADDR)
-
+#define RCC                         ((RCC_RegDef_t*)RCC_BASEADDR)
+#define EXTI                        ((EXTI_RegDef_t*)EXTI_BASEADDR)
 /*
  * CLOCK ENABLE MACROS FOR GPIOx peripherals
  */
