@@ -125,7 +125,8 @@
  * IRQ configuration and ISR handling
  */
 
- void GPIO_IRQConfig(uint8_t IRQNumber, uint8_t IRQPriority, uint8_t EnorDi);
+ void GPIO_IRQInterruptConfig(uint8_t IRQNumber , uint8_t EnorDi);
+ void GPIO_IRQPriorityConfig(uint8_t IRQNumber,uint32_t Priority);
  void GPIO_IRQHandling(uint8_t PinNumber);
 
 
