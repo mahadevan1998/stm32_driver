@@ -99,16 +99,21 @@
 #define EXTI_BASEADDR               (APB2PERIPH_BASEADDR + 0x3C00)
 #define SYSCFG_BASEADDR             (APB2PERIPH_BASEADDR + 0x3800)
 #define SPI1_BASEADDR               (APB2PERIPH_BASEADDR + 0x3000)
+#define SPI4_BASEADDR				(APB2PERIPH_BASEADDR + 0x3400)
 #define USART1_BASEADDR             (APB2PERIPH_BASEADDR + 0x1000)
 #define USART6_BASEADDR             (APB2PERIPH_BASEADDR + 0x1400)
 
-/*
+/*******************************************************
  *  peripheral register definition structures
+ *******************************************************/
+
+/*
+ * GPIO Register definition structure
  */
 
 typedef struct
 {
-	__vo uint32_t MODER ;     //
+	__vo uint32_t MODER ;
 	__vo uint32_t OTYPER ;
 	__vo uint32_t OSPEEDER ;
 	__vo uint32_t PUPDR ;
@@ -118,6 +123,11 @@ typedef struct
 	__vo uint32_t LCKR ;
 	__vo uint32_t AFR[2] ;
 }GPIO_RegDef_t;
+
+/*
+ * RCC Register definition structure
+ */
+
 
 typedef struct
 {   __vo uint32_t CR;
@@ -188,6 +198,23 @@ typedef struct
   }SYSCFG_RegDef_t;
 
 
+  /*
+   * SPI Register definition structure
+   */
+
+  typedef struct
+  {
+  	__vo uint32_t CR1;        /*!< TODO,     										Address offset: 0x00 */
+  	__vo uint32_t CR2;        /*!< TODO,     										Address offset: 0x04 */
+  	__vo uint32_t SR;         /*!< TODO,     										Address offset: 0x08 */
+  	__vo uint32_t DR;         /*!< TODO,     										Address offset: 0x0C */
+  	__vo uint32_t CRCPR;      /*!< TODO,     										Address offset: 0x10 */
+  	__vo uint32_t RXCRCR;     /*!< TODO,     										Address offset: 0x14 */
+  	__vo uint32_t TXCRCR;     /*!< TODO,     										Address offset: 0x18 */
+  	__vo uint32_t I2SCFGR;    /*!< TODO,     										Address offset: 0x1C */
+  	__vo uint32_t I2SPR;      /*!< TODO,     										Address offset: 0x20 */
+  } SPI_RegDef_t;
+
 /*
  * peripheral definition (peripheral base address type casted to *xxx_RegDef_t)
  */
@@ -203,7 +230,13 @@ typedef struct
 #define RCC                         ((RCC_RegDef_t*)RCC_BASEADDR)
 #define EXTI                        ((EXTI_RegDef_t*)EXTI_BASEADDR)
 #define SYSCFG						((SYSCFG_RegDef_t*)SYSCFG_BASEADDR)
-/*
+
+#define SPI1						((SPI_RegDef_t*)SPI1_BASEADDR)
+#define SPI2						((SPI_RegDef_t*)SPI2_BASEADDR)
+#define SPI3						((SPI_RegDef_t*)SPI3_BASEADDR)
+#define SPI4						((SPI_RegDef_t*)SPI4_BASEADDR)
+
+  /*
  * CLOCK ENABLE MACROS FOR GPIOx peripherals
  */
 
