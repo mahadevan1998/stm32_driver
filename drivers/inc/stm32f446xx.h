@@ -49,7 +49,7 @@
 /*
 
 /*
- * base addresses of flash , SRAM and system memory(ROM)
+ base addresses of flash , SRAM and system memory(ROM)
  */
 #define FLASH_BASEADDR		        0x08000000U
 #define SRAM1_BASEADDR		        0x20000000U
@@ -58,7 +58,7 @@
 #define ROM                         0x1FFF0000U
 
 /*
- * base address of bus domains (AHBx/APBx)peripherals
+  base address of bus domains (AHBx/APBx)peripherals
  */
 
 #define PERIPH_BASEADDR				0x40000000U
@@ -68,7 +68,7 @@
 #define AHB2PERIPH_BASEADDR         0x50000000U
 
 /*
- * base addresses of all peripherals hanging on AHB1
+  base addresses of all peripherals hanging on AHB1
  */
 #define GPIO_A_BASEADDR             (AHB1PERIPH_BASEADDR + 0x0000)
 #define GPIO_B_BASEADDR             (AHB1PERIPH_BASEADDR + 0x0400)
@@ -81,20 +81,20 @@
 #define RCC_BASEADDR                (AHB1PERIPH_BASEADDR + 0x3800)
 
 /*
- *  base addresses of peripherals hanging on APB1
+   base addresses of peripherals hanging on APB1
  */
-#define SPI2_BASEADDR               (APB1PERIPH_BASEADDR + 3800)
-#define SPI3_BASEADDR               (APB1PERIPH_BASEADDR + 3C00)
-#define USART2_BASEADDR             (APB1PERIPH_BASEADDR + 4400)
-#define USART3_BASEADDR             (APB1PERIPH_BASEADDR + 4800)
-#define UART4_BASEADDR              (APB1PERIPH_BASEADDR + 4C00)
-#define UART5_BASEADDR              (APB1PERIPH_BASEADDR + 5000)
-#define I2C1_BASEADDR               (APB1PERIPH_BASEADDR + 5400)
-#define I2C2_BASEADDR               (APB1PERIPH_BASEADDR + 5800)
-#define I2C3_BASEADDR               (APB1PERIPH_BASEADDR + 5C00)
+#define SPI2_BASEADDR               (APB1PERIPH_BASEADDR + 0x3800)
+#define SPI3_BASEADDR               (APB1PERIPH_BASEADDR + 0x3C00)
+#define USART2_BASEADDR             (APB1PERIPH_BASEADDR + 0x4400)
+#define USART3_BASEADDR             (APB1PERIPH_BASEADDR + 0x4800)
+#define UART4_BASEADDR              (APB1PERIPH_BASEADDR + 0x4C00)
+#define UART5_BASEADDR              (APB1PERIPH_BASEADDR + 0x5000)
+#define I2C1_BASEADDR               (APB1PERIPH_BASEADDR + 0x5400)
+#define I2C2_BASEADDR               (APB1PERIPH_BASEADDR + 0x5800)
+#define I2C3_BASEADDR               (APB1PERIPH_BASEADDR + 0x5C00)
 
 /*
- * base addresses of peripherals hanging on APB2
+ base addresses of peripherals hanging on APB2
  */
 #define EXTI_BASEADDR               (APB2PERIPH_BASEADDR + 0x3C00)
 #define SYSCFG_BASEADDR             (APB2PERIPH_BASEADDR + 0x3800)
@@ -390,5 +390,6 @@ typedef struct
 #define GPIO_PIN_RESET				RESET
 
 #include"stm32f446xx_gpio_drivers.h"
+#include"stm32f446xx_spi_driver.h"
 
 #endif /* INC_STM32F446XX_H_ */
