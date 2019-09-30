@@ -99,6 +99,8 @@ void GPIO_PeriClockControl(GPIO_RegDef_t *pGPIOx, uint8_t EnorDi)
 
    void GPIO_Init(GPIO_Handle_t *pGPIOHandle)
    {
+
+	   GPIO_PeriClockControl(pGPIOHandle->pGPIOx, ENABLE);
      uint32_t temp = 0; // temporary register
 
    //   pin mode configuration
