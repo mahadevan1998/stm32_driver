@@ -26,7 +26,28 @@ typedef struct
 {
 	SPI_RegDef_t *pSPIx;
 	SPI_Config_t SPIConfig;
+	uint8_t 		*pTxBuffer; /* !< To store the app. Tx buffer address > */
+	uint8_t 		*pRxBuffer;	/* !< To store the app. Rx buffer address > */
+	uint32_t 		TxLen;		/* !< To store Tx len > */
+	uint32_t 		RxLen;		/* !< To store Tx len > */
+	uint8_t 		TxState;	/* !< To store Tx state > */
+	uint8_t 		RxState;	/* !< To store Rx state > */
 }SPI_Handle_t;
+
+/*
+ * SPI application states
+ */
+#define SPI_READY 			 0
+#define SPI_BUSY_IN_RX 		 1
+#define SPI_BUSY_IN_TX 		 2
+
+/*
+ * Possible SPI Application events
+ */
+#define SPI_EVENT_TX_CMPLT   1
+#define SPI_EVENT_RX_CMPLT   2
+#define SPI_EVENT_OVR_ERR    3
+#define SPI_EVENT_CRC_ERR    4
 
 
 
@@ -116,6 +137,10 @@ void SPI_DeInit(SPI_RegDef_t *pSPIx);
 */
 void SPI_SendData(SPI_RegDef_t *pSPIx, uint8_t *TxBuffer, uint32_t Len);
 void SPI_ReceiveData(SPI_RegDef_t *pSPIx, uint8_t *RxBuffer, uint32_t Len);
+
+uint8_t SPI_SendDataIT(SPI_Handle_t *pSPIHandle,uint8_t *pTxBuffer, uint32_t Len);
+uint8_t SPI_ReceiveDataIT(SPI_Handle_t *pSPIHandle, uint8_t *pRxBuffer, uint32_t Len);
+
 
 /*
  * IRQ configuration and ISR handling

@@ -7,8 +7,10 @@
 
 #ifndef INC_STM32F446XX_H_
 #define INC_STM32F446XX_H_
+#include"stddef.h"
 
 #define __vo volatile
+#define __weak __attribute__((weak))
 
 /**********************************START:Processor Specific Details **********************************/
 /*

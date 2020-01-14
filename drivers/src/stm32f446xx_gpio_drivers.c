@@ -101,7 +101,7 @@ void GPIO_PeriClockControl(GPIO_RegDef_t *pGPIOx, uint8_t EnorDi)
    {
 
 	   GPIO_PeriClockControl(pGPIOHandle->pGPIOx, ENABLE);
-     uint32_t temp = 0; // temporary register
+       uint32_t temp = 0; // temporary register
 
    //   pin mode configuration
 

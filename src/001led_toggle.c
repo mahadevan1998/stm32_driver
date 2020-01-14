@@ -37,23 +37,53 @@ int main(void)
 	GpioLed.GPIO_PinConfig.GPIO_PinSpeed = GPIO_SPEED_FAST;
 	GpioLed.GPIO_PinConfig.GPIO_PinPuPdControl = GPIO_NO_PUPD;
 
-	GPIO_PeriClockControl(GPIOA,ENABLE);
-	GPIO_PeriClockControl(GPIOC,ENABLE);
-	GPIO_Init(&GpioLed);
-	GPIO_Init(&Btn);
+	//GPIO_PeriClockControl(GPIOA,ENABLE);
+	//GPIO_PeriClockControl(GPIOC,ENABLE);
+	 GPIO_Init(&GpioLed);
+	 GPIO_Init(&Btn);
 
 	while(1)
 	{
 		if(!GPIO_ReadFromInputPin(GPIOC,13))
 	{
+		/*delay();
+		GPIO_ToggleOutputPin(GPIOA,GPIO_PIN_NO_5);
 		delay();
 		GPIO_ToggleOutputPin(GPIOA,GPIO_PIN_NO_5);
+		delay();
+		GPIO_ToggleOutputPin(GPIOA,GPIO_PIN_NO_5);
+		delay();
+		GPIO_ToggleOutputPin(GPIOA,GPIO_PIN_NO_5);
+		delay();
+		GPIO_ToggleOutputPin(GPIOA,GPIO_PIN_NO_5);
+		delay();
+		GPIO_ToggleOutputPin(GPIOA,GPIO_PIN_NO_5);
+		delay();
+		GPIO_ToggleOutputPin(GPIOA,GPIO_PIN_NO_5);
+		delay();
+		GPIO_ToggleOutputPin(GPIOA,GPIO_PIN_NO_5);
+		delay();
+		GPIO_ToggleOutputPin(GPIOA,GPIO_PIN_NO_5);
+		delay();
+		GPIO_ToggleOutputPin(GPIOA,GPIO_PIN_NO_5);*/
+		GPIO_WriteToOutputPin(GPIOA,GPIO_PIN_NO_5,1);
+		delay();
+		GPIO_WriteToOutputPin(GPIOA,GPIO_PIN_NO_5,0);
+		delay();
+		GPIO_WriteToOutputPin(GPIOA,GPIO_PIN_NO_5,1);
+		delay();
+		GPIO_WriteToOutputPin(GPIOA,GPIO_PIN_NO_5,0);
+		delay();
+		GPIO_WriteToOutputPin(GPIOA,GPIO_PIN_NO_5,1);
+		delay();
+		GPIO_WriteToOutputPin(GPIOA,GPIO_PIN_NO_5,0);
 
-		}
-		//GPIO_WriteToOutputPin(GPIOA, GPIO_PIN_NO_5, !GPIO_ReadFromInputPin(GPIOC,13));
+
 	}
 
 
-    return 0;
 
+
+}
+	return 0;
 }

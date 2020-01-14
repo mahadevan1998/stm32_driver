@@ -1,5 +1,5 @@
 /*
- * 003spi_slave_tx_only.c
+` * 003spi_slave_tx_only.c
  *
  *  Created on: 30-Sep-2019
  *      Author: MAHADEVAN
@@ -87,7 +87,7 @@ void GPIO_ButtonInit(void)
 
 int main(void)
 {
-	char user_data[] = "HEY , DATA RECIEVED";
+	char user_data[] = "1BM16EC";
 
 	GPIO_ButtonInit();
 
