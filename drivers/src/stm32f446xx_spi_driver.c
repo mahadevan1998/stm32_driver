@@ -7,6 +7,11 @@
 
 #include"stm32f446xx_spi_driver.h"
 
+static void  spi_txe_interrupt_handle(SPI_Handle_t *pSPIHandle);
+static void  spi_rxne_interrupt_handle(SPI_Handle_t *pSPIHandle);
+static void  spi_ovr_err_interrupt_handle(SPI_Handle_t *pSPIHandle);
+
+
 /******************************
  * 	Peripheral Clock Setup APIs
  ******************************/
@@ -261,7 +266,7 @@ void  SPI_SSOEConfig(SPI_RegDef_t *pSPIx, uint8_t EnOrDi)
 					/* 	* IRQ configuration and ISR handling  */
 
 
- /*void SPI_IRQInterruptConfig(uint8_t IRQNumber , uint8_t EnorDi)
+ void SPI_IRQInterruptConfig(uint8_t IRQNumber , uint8_t EnorDi)
  {
 	 if(EnorDi == ENABLE)
 	 	{
@@ -298,6 +303,7 @@ void  SPI_SSOEConfig(SPI_RegDef_t *pSPIx, uint8_t EnOrDi)
 	 		}
 	 	}
  }
+
  void SPI_IRQPriorityConfig(uint8_t IRQNumber,uint32_t IRQPriority)
  {
 	 //1. first lets find out the ipr register
@@ -311,6 +317,7 @@ void  SPI_SSOEConfig(SPI_RegDef_t *pSPIx, uint8_t EnOrDi)
 
  }
 
+
  uint8_t SPI_SendDataIT(SPI_Handle_t *pSPIHandle,uint8_t *pTxBuffer, uint32_t Len)
  {
  	uint8_t state = pSPIHandle->TxState;
@@ -320,6 +327,7 @@ void  SPI_SSOEConfig(SPI_RegDef_t *pSPIx, uint8_t EnOrDi)
  		//1 . Save the Tx buffer address and Len information in some global variables
  		pSPIHandle->pTxBuffer = pTxBuffer;
  		pSPIHandle->TxLen = Len;
+
  		//2.  Mark the SPI state as busy in transmission so that
  		//    no other code can take over same SPI peripheral until transmission is over
  		pSPIHandle->TxState = SPI_BUSY_IN_TX;
@@ -360,7 +368,7 @@ void  SPI_SSOEConfig(SPI_RegDef_t *pSPIx, uint8_t EnOrDi)
 
 
 
- /*void SPI_IRQHandling(SPI_Handle_t *pHandle)
+void SPI_IRQHandling(SPI_Handle_t *pHandle)
  {
 
  	uint8_t temp1 , temp2;
@@ -513,7 +521,7 @@ void  SPI_SSOEConfig(SPI_RegDef_t *pSPIx, uint8_t EnOrDi)
  {
 
  	//This is a weak implementation . the user application may override this function.
- }*/
+ }
 
 
 

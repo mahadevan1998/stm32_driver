@@ -48,11 +48,8 @@
 #include<stdint.h>
 
 /**********************************START:Microcontroller Specific Details **********************************/
-/*
 
-/*
- base addresses of flash , SRAM and system memory(ROM)
- */
+/* base addresses of flash , SRAM and system memory(ROM)*/
 #define FLASH_BASEADDR		        0x08000000U
 #define SRAM1_BASEADDR		        0x20000000U
 #define SRAM                        SRAM1_BASEADDR

@@ -87,7 +87,7 @@ void GPIO_ButtonInit(void)
 
 int main(void)
 {
-	char user_data[] = "1BM16EC";
+	char user_data[] = "EMBEDDED SYSTEMS";
 
 	GPIO_ButtonInit();
 

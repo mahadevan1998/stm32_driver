@@ -58,8 +58,8 @@
 							</tool>
 						</toolChain>
 					</folderInfo>
-					<fileInfo id="fr.ac6.managedbuild.config.gnu.cross.exe.debug.1894255138.842927060" name="003spi_slave_tx_only.c" rcbsApplicability="disable" resourcePath="src/003spi_slave_tx_only.c" toolsToInvoke="fr.ac6.managedbuild.tool.gnu.cross.c.compiler.55962083.397486934">
-						<tool id="fr.ac6.managedbuild.tool.gnu.cross.c.compiler.55962083.397486934" name="MCU GCC Compiler" superClass="fr.ac6.managedbuild.tool.gnu.cross.c.compiler.55962083"/>
+					<fileInfo id="fr.ac6.managedbuild.config.gnu.cross.exe.debug.1894255138.445219170" name="0005spi_it.c" rcbsApplicability="disable" resourcePath="src/0005spi_it.c" toolsToInvoke="fr.ac6.managedbuild.tool.gnu.cross.c.compiler.55962083.1587810781">
+						<tool id="fr.ac6.managedbuild.tool.gnu.cross.c.compiler.55962083.1587810781" name="MCU GCC Compiler" superClass="fr.ac6.managedbuild.tool.gnu.cross.c.compiler.55962083"/>
 					</fileInfo>
 					<folderInfo id="fr.ac6.managedbuild.config.gnu.cross.exe.debug.1894255138.1017569914" name="/" resourcePath="drivers">
 						<toolChain id="fr.ac6.managedbuild.toolchain.gnu.cross.exe.debug.256171752" name="Ac6 STM32 MCU GCC" superClass="fr.ac6.managedbuild.toolchain.gnu.cross.exe.debug" unusedChildren="">
@@ -106,7 +106,7 @@
 					<sourceEntries>
 						<entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="Debug"/>
 						<entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="drivers"/>
-						<entry excluding="002button_interrupt.c|001led_toggle.c|004spi_cmd.c" flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="src"/>
+						<entry excluding="003spi_slave_tx_only.c|002button_interrupt.c|001led_toggle.c|004spi_cmd.c" flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="src"/>
 						<entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="startup"/>
 					</sourceEntries>
 				</configuration>
