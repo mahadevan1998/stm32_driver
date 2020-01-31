@@ -480,6 +480,14 @@ typedef struct
 #define I2C_CR2_ITEVTEN				 			9
 #define I2C_CR2_ITBUFEN 			    		10
 
+
+  	  	  	  	  	  	  	  /* Bit position definitions I2C_OAR1*/
+#define I2C_OAR1_ADD0    				 		0
+#define I2C_OAR1_ADD71 				 	 		1
+#define I2C_OAR1_ADD98  			 	 		8
+#define I2C_OAR1_ADDMODE   			 			15
+
+
   	  	  	  	  	  	  //Bit position definitions of I2C SR1
 
 #define I2C_SR1_SB 					 			0
