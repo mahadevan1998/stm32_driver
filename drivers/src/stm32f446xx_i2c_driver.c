@@ -7,6 +7,41 @@
 
 #include"stm32f446xx_i2c_driver.h"
 
+
+static void I2C_GenerateStartCondition(I2C_RegDef_t *pI2Cx);
+static void I2C_GenerateStopCondition(I2C_RegDef_t *pI2Cx);
+static void I2C_ExecuteAddressPhaseWrite(I2C_RegDef_t *pI2Cx, uint8_t SlaveAddr);
+static void I2C_ClearADDRFlag(I2C_RegDef_t *pI2Cx);
+
+static void I2C_GenerateStartCondition(I2C_RegDef_t *pI2Cx)
+ {
+	 pI2Cx->CR1 |= (1 << I2C_CR1_START);
+ }
+
+static void I2C_GenerateStopCondition(I2C_RegDef_t *pI2Cx)
+{
+	 pI2Cx->CR1 |= (1 << I2C_CR1_STOP);
+
+}
+
+
+static void I2C_ExecuteAddressPhaseWrite(I2C_RegDef_t *pI2Cx, uint8_t SlaveAddr)
+{
+	SlaveAddr = SlaveAddr << 1;
+	SlaveAddr &= ~(1); //SlaveAddr is Slave address + r/nw bit=0
+	pI2Cx->DR = SlaveAddr;
+}
+
+
+static void I2C_ClearADDRFlag(I2C_RegDef_t *pI2Cx)
+{
+	uint32_t dummyRead = pI2Cx->SR1;
+	dummyRead = pI2Cx->SR2;
+	(void)dummyRead;
+}
+
+
+
 uint16_t AHB_PreScaler[8] = {2,4,8,16,64,128,256,512};
 
 uint8_t APB1_PreScaler[4] = { 2, 4 , 8, 16};
@@ -64,10 +99,8 @@ uint32_t RCC_GetPClk1Value(void)
 
 
 
-
-
-
 /************** ENABLE OR DISABLE THE I2C PERIPHERAL**********************/
+
 void I2C_PeripheralControl(I2C_RegDef_t *pI2Cx, uint8_t EnOrDi)
 
 {
@@ -186,8 +219,6 @@ void I2C_Init(I2C_Handle_t *pI2CHandle)
 
 }
 
-
-
 /*
 *************************This API resets the I2C peripheral registers******************************
 */
@@ -208,9 +239,7 @@ void I2C_DeInit(I2C_RegDef_t *pI2Cx)
 }
 
 
-/*
-  * IRQ configuration and ISR handling
-  */
+/****************************** IRQ configuration and ISR handling ************************/
 
   void I2C_IRQInterruptConfig(uint8_t IRQNumber , uint8_t EnorDi)
   {
@@ -249,7 +278,10 @@ void I2C_DeInit(I2C_RegDef_t *pI2Cx)
 	  	 		}
 	  	 	}
 	  }
-  void I2C_IRQPriorityConfig(uint8_t IRQNumber,uint32_t IRQPriority)
+
+// Interrupt Priority Configuration
+
+ void I2C_IRQPriorityConfig(uint8_t IRQNumber,uint32_t IRQPriority)
   {
 	  //1. first lets find out the ipr register
 	  	 	uint8_t iprx = IRQNumber / 4;
@@ -258,6 +290,73 @@ void I2C_DeInit(I2C_RegDef_t *pI2Cx)
 	  	 	uint8_t shift_amount = ( 8 * iprx_section) + ( 8 - NO_PR_BITS_IMPLEMENTED) ;
 
 	  	 	*(  NVIC_PR_BASE_ADDR + iprx ) |=  ( IRQPriority << shift_amount );
-  }
+ }
+
+
+ void I2C_MasterSendData(I2C_Handle_t *pI2CHandle , uint8_t *pTxbuffer , uint32_t Len , uint8_t SlaveAddr)
+ {
+
+	 // 1. Generate the START condition
+	 	I2C_GenerateStartCondition(pI2CHandle->pI2Cx);
+
+	 	//2. confirm that start generation is completed by checking the SB flag in the SR1
+	 	//   Note: Until SB is cleared SCL will be stretched (pulled to LOW)
+	 	while( !  I2C_GetFlagStatus(pI2CHandle->pI2Cx,I2C_FLAG_SB)   );
+
+	 	//3. Send the address of the slave with r/nw bit set to w(0) (total 8 bits )
+	 	I2C_ExecuteAddressPhaseWrite(pI2CHandle->pI2Cx,SlaveAddr);
+
+	 	//4. Confirm that address phase is completed by checking the ADDR flag in teh SR1
+	 	while( !  I2C_GetFlagStatus(pI2CHandle->pI2Cx,I2C_FLAG_ADDR)   );
+
+	 	//5. clear the ADDR flag according to its software sequence
+	 	//   Note: Until ADDR is cleared SCL will be stretched (pulled to LOW)
+	 	I2C_ClearADDRFlag(pI2CHandle);
+
+	 	//6. send the data until len becomes 0
+
+	 	while(Len > 0)
+	 	{
+	 		while(! I2C_GetFlagStatus(pI2CHandle->pI2Cx,I2C_FLAG_TXE) ); //Wait till TXE is set
+	 		pI2CHandle->pI2Cx->DR = *pTxbuffer;
+	 		pTxbuffer++;
+	 		Len--;
+	 	}
+
+	 	//7. when Len becomes zero wait for TXE=1 and BTF=1 before generating the STOP condition
+	 	//   Note: TXE=1 , BTF=1 , means that both SR and DR are empty and next transmission should begin
+	 	//   when BTF=1 SCL will be stretched (pulled to LOW)
+
+	 	while(! I2C_GetFlagStatus(pI2CHandle->pI2Cx,I2C_FLAG_TXE) );
+
+	 	while(! I2C_GetFlagStatus(pI2CHandle->pI2Cx,I2C_FLAG_BTF) );
+
+
+	 	//8. Generate STOP condition and master need not to wait for the completion of stop condition.
+	 	//   Note: generating STOP, automatically clears the BTF
+
+	 	I2C_GenerateStopCondition(pI2CHandle->pI2Cx);
+
+}
+
+
+
+ 	 	 	 	 	 	 	 	 	 	 // API for checking I2C Flags
+
+ uint8_t I2C_GetFlagStatus(I2C_RegDef_t *pI2Cx , uint32_t FlagName)
+ {
+	 if(pI2Cx->SR1 & FlagName)
+	 	{
+	 		return FLAG_SET;
+	 	}
+	 	return FLAG_RESET;
+ }
+
+
+
+
+
+
+
 
 
